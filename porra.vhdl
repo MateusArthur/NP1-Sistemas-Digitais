@@ -6,7 +6,7 @@ use IEEE.numeric_std.all;
 entity adder is
 port(
 	 a                    : in  std_logic_vector(7 downto 0);
-    soma           : in  std_logic;
+    soma, sub, mult, div : in  std_logic;
     b0,b1,b2,b3          : out std_logic_vector(0 to 6)
 );
 end entity;
@@ -24,10 +24,18 @@ begin
 	 inteiro <= to_integer(signed(a));
     b       <= 10;
     
-	 process(soma)
+	 process(soma, sub, mult, div)
 	 begin
 			if (soma = '0') then
-				res <= (b / inteiro);
+				res <= (inteiro + b);
+			elsif (sub = '0') then
+				res <= (b - inteiro);
+			elsif (mult = '0') then
+				res <= (b*inteiro);
+			elsif (div = '0') then
+				res <= (b/inteiro);
+			elsif (sub = '1' and soma ='1' and mult = '1' and div = '1') then
+				res <= b;
 			end if;
 	 end process;
 
